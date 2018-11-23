@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+     <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+<h1> Artikelübersicht</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Artikelnummer</th>
+        <th>Lagerplatz</th>
+        <th>supplier</th>
+        <th>bestellt</th>
+     </tr>
+    </thead>
+    <tbody>
+    {% for article in empty_articles %}
+    <tr>
+        <td>{{article.article_label}}</td>
+        <td>{{article.article_sensor_no}}</td>
+        <td>
+            {{article.suppliers.all}}
+        {% for supplier in article.article_supplier.all %}
+            {{supplier}}
+        {% endfor %}
+        </td>
+        <td>
+        <form action="/warehouse/" method="post">
+            {%csrf_token%}
+            <button type="submit" class="btn btn-primary" name="article" value="{{article.article_id}}">wurde bestellt</button>
+        </form>
+        </td>
+
+    {% endfor %}
+
+    </tbody>
+</table>
+</div>
+
+<div class="container">
+<h1> Vor kurzem Bestellt</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Artikelnummer</th>
+        <th>Datum</th>
+        <th>Supplier</th>
+     </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+</div>
+</html>
